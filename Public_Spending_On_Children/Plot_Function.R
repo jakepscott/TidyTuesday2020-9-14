@@ -1,14 +1,14 @@
 # Loading Libraries -------------------------------------------------------
-library(tidyverse)
-library(tidytuesdayR)
-library(readr)
-library(albersusa)
-library(plotly)
-windowsFonts(`Roboto Condensed` = windowsFont("Roboto Condensed"))
-# Loading Data ------------------------------------------------------------
-tuesdata <- tidytuesdayR::tt_load('2020-09-15')
-kids_data <- tuesdata$kids
-
+# library(tidyverse)
+# library(tidytuesdayR)
+# library(readr)
+# library(urbnmapr)
+# library(plotly)
+# windowsFonts(`Roboto Condensed` = windowsFont("Roboto Condensed"))
+# # Loading Data ------------------------------------------------------------
+# tuesdata <- tidytuesdayR::tt_load('2020-09-15')
+# kids_data <- tuesdata$kids
+kids_data <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-09-15/kids.csv')
 # Defining Function -------------------------------------------------------
 plot_function <- function(program,year_choice,measure){
 
@@ -33,7 +33,7 @@ plot_function <- function(program,year_choice,measure){
     filter(variable==program) %>% 
     filter(year==year_choice) 
   
-  map <- usa_sf() %>% rename("state"=name)
+  map <- get_urbn_map("states",sf=T) %>% rename("state"=state_name)
   data <- map %>% left_join(clean,by="state")
   
 
@@ -42,19 +42,20 @@ plot_function <- function(program,year_choice,measure){
     geom_sf(aes_string(fill=measure)) +
     scale_fill_continuous( low = "white", high = "darkgreen", 
                            name = "Spending", label = scales::dollar) +
-    labs(caption = "Plot: @jakepscott2020 | Data: Urban Institute") +
+    labs(title="Spending on Children by State",
+         subtitle = "Plot: @jakepscott2020 | Data: Urban Institute") +
     theme_minimal(base_size = 12,base_family = "Roboto Condensed") +
-    theme(axis.title = element_blank(),
+    theme(plot.title = element_text(face = "bold", size = rel(2), hjust = .5),
+          plot.subtitle = element_text(),
+          axis.title = element_blank(),
           axis.text = element_blank(),
-          panel.grid = element_blank(),
-          plot.caption = element_text(face = "italic", size = rel(.8), 
-                                      color = "grey70"))
+          panel.grid = element_blank())
   
   
   ggplotly(plot,tooltip = "text") %>% 
     style(hoveron="fill") 
 }
 
-# plot_function(program = "PK12ed", 
-#               year_choice = 2016,
-#               measure = "inf_adj")
+# plot_function(program = "PK12ed",
+#                year_choice = 2016,
+#                measure = "inf_adj")

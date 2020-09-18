@@ -1,0 +1,12 @@
+name: Public_Spending_On_Children
+title: Public_Spending_On_Children
+username:
+account: jake-scott
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 2834673
+bundleId: 3642165
+url: https://jake-scott.shinyapps.io/Public_Spending_On_Children/
+when: 1600394628.04416
+asMultiple: FALSE
+asStatic: FALSE

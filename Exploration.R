@@ -4,9 +4,9 @@ library(tidytuesdayR)
 library(readr)
 
 # Loading Data ------------------------------------------------------------
-tuesdata <- tidytuesdayR::tt_load('2020-09-15')
-
-
+#tuesdata <- tidytuesdayR::tt_load('2020-09-15')
+#saveRDS(kids_data,"kids_data.rds")
+read_rds("Public_Spending_On_Children/kids_data.rds")
 # Exploring Data ----------------------------------------------------------
 kids_data <- tuesdata$kids
 
